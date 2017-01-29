@@ -38,6 +38,22 @@ WORKDIR /PaintsChainer/cgi-bin/paint_x2_unet/models/
 
 RUN mv /unet_*_standard .
 
+WORKDIR /PaintsChainer/static/images/
+
+RUN apt-get update && \
+    apt-get install --assume-yes \
+    cron \
+    tmpreaper && \
+    touch line/.tmpreaper && \
+    touch out/.tmpreaper && \
+    touch out_min/.tmpreaper && \
+    touch ref/.tmpreaper
+
+WORKDIR /etc/cron.d/
+
+RUN /bin/bash -c "echo -e \"* * * * * root /usr/sbin/tmpreaper --protect '*/.tmpreaper' 1h /PaintsChainer/static/images/\n\" > delete-old-paintschainer-images"
+RUN chmod 0644 delete-old-paintschainer-images
+
 WORKDIR /PaintsChainer
 
 # CPU patch from https://github.com/taizan/PaintsChainer/pull/6
@@ -50,4 +66,4 @@ EXPOSE 8000
 
 ENTRYPOINT [ "/tini", "--" ]
 
-CMD [ "sh", "-c", "python -u server.py --host 0.0.0.0 --gpu $PAINTSCHAINER_GPU"]
+CMD [ "sh", "-c", "cron /etc/cron.d/delete-old-paintschainer-images && python -u server.py --host 0.0.0.0 --gpu $PAINTSCHAINER_GPU"]
