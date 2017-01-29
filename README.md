@@ -4,6 +4,8 @@ Docker container for [PaintsChainer](https://github.com/taizan/PaintsChainer)
 
 # How to use this image
 
+If you want to run this on Windows and have no familiarity with Docker, etc you can find [Complete setup instructions for Windows (including Docker)](https://github.com/liamjones/PaintsChainer-Docker/wiki/Complete-setup-instructions-for-Windows-(including-Docker)) on the wiki.
+
 ## Processing via CUDA on GPU
 
 Ensure you have [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) installed for GPU passthrough to containers. To run with the default GPU:
