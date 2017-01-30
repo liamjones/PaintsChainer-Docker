@@ -21,6 +21,7 @@ ENV PAINTSCHAINER_MODEL=original \
 
 RUN curl --location "https://github.com/liamjones/PaintsChainer-Models/releases/download/{$PAINTSCHAINER_MODEL}/unet_128_standard" > unet_128_standard && \
     curl --location "https://github.com/liamjones/PaintsChainer-Models/releases/download/{$PAINTSCHAINER_MODEL}/unet_512_standard" > unet_512_standard && \
+    curl --location "https://github.com/liamjones/PaintsChainer-Models/releases/download/{$PAINTSCHAINER_MODEL}/License.txt" > Licence.txt && \
     curl --location "https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini" > /tini
 
 # Re-running apt-get update because we're hoping to cache the Anaconda layer for a while
@@ -36,7 +37,7 @@ RUN apt-get update && \
     pip install chainer && \
     git clone https://github.com/taizan/PaintsChainer.git && \
     mkdir /PaintsChainer/cgi-bin/paint_x2_unet/models/ && \
-    mv /unet_*_standard /PaintsChainer/cgi-bin/paint_x2_unet/models/ && \
+    mv /unet_*_standard /Licence.txt /PaintsChainer/cgi-bin/paint_x2_unet/models/ && \
     touch /PaintsChainer/static/images/line/.tmpreaper && \
     touch /PaintsChainer/static/images/out/.tmpreaper && \
     touch /PaintsChainer/static/images/out_min/.tmpreaper && \
