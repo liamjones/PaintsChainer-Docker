@@ -1,0 +1,22 @@
+From bdedc4e83aad079d7e378be0df40362d0c9aa5c2 Mon Sep 17 00:00:00 2001
+From: Liam Jones <liam@stardive.co.uk>
+Date: Mon, 30 Jan 2017 19:50:41 +0000
+Subject: [PATCH] Change Downloads URL to be absolute rather than relative
+
+---
+ static/index.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/static/index.html b/static/index.html
+index f814fe4..7be61be 100644
+--- a/static/index.html
++++ b/static/index.html
+@@ -41,7 +41,7 @@
+           <a class="brand" href="#">PaintsChainer</a>
+           <ul class="nav">
+             <li class="active"><a href="#">Home</a></li>
+-            <li><a href="/downloads">Downloads</a></li>
++            <li><a href="http://paintschainer.preferred.tech/downloads/">Downloads</a></li>
+             <li><a href="http://chainer.org/">Chainer</a></li>
+             <li><a href="http://github.com/taizan/PaintsChainer">GitHub</a></li>
+           </ul>

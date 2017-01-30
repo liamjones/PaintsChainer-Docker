@@ -47,8 +47,11 @@ RUN apt-get update && \
 
 WORKDIR /PaintsChainer
 
+COPY absolute-downloads-url.patch .
 
 RUN git checkout $PAINTSCHAINER_COMMIT && \
+    git apply absolute-downloads-url.patch && \
+    rm absolute-downloads-url.patch
 
 EXPOSE 8000
 
