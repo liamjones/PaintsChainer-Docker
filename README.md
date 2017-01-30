@@ -44,7 +44,4 @@ After bringing up the container, the web interface should be available at [http:
 
 # Notes
 
-This image is currently only recommended for local use for a couple of reasons:
-
-* Directory browsing is available with the python server so all uploaded images are essentially public
-* No image cleanup is performed while the container is running so eventually space will be exhausted
+This image is currently only recommended for local use because directory browsing is available with the python server so all uploaded images are essentially public
