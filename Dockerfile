@@ -12,7 +12,7 @@ RUN apt-get update && \
 
 ENV PAINTSCHAINER_MODEL=original \
     PAINTSCHAINER_GPU=0 \
-    PAINTSCHAINER_COMMIT=471a05d \
+    PAINTSCHAINER_COMMIT=0d3ab98 \
     TINI_VERSION=0.13.2 \
     PATH=/opt/conda/bin:$PATH \
     CFLAGS=-I/usr/local/cuda-8.0/targets/x86_64-linux/include/:$CFLAGS \
@@ -46,12 +46,8 @@ RUN apt-get update && \
 
 WORKDIR /PaintsChainer
 
-# CPU patch from https://github.com/taizan/PaintsChainer/pull/6
-COPY cpu.patch .
 
 RUN git checkout $PAINTSCHAINER_COMMIT && \
-    git apply cpu.patch && \
-    rm cpu.patch
 
 EXPOSE 8000
 
