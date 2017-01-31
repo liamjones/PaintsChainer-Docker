@@ -17,7 +17,7 @@ $ nvidia-docker run -p 8000:8000 liamjones/paintschainer
 If you have multiple GPUs and want to specify an alternate one you can specify GPU number via an environment variable:
 
 ```console
-$ nvidia-docker run -p 8000:8000 -e PAINTCHAINER_GPU=1 liamjones/paintschainer
+$ nvidia-docker run -p 8000:8000 -e PAINTSCHAINER_GPU=1 liamjones/paintschainer
 ```
 
 GPU numbers can be verified by running:
@@ -35,7 +35,7 @@ This will be slower than GPU processing but has some advantages;
 * Can potentially process larger images (assuming you have more RAM than VRAM)
 
 ```console
-$ docker run -p 8000:8000 -e PAINTCHAINER_GPU=-1 liamjones/paintschainer
+$ docker run -p 8000:8000 -e PAINTSCHAINER_GPU=-1 liamjones/paintschainer
 ```
 
 ## Access the web interface
