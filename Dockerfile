@@ -54,7 +54,11 @@ RUN git clone https://github.com/taizan/PaintsChainer.git && \
 
 WORKDIR /PaintsChainer
 
-RUN git checkout $PAINTSCHAINER_COMMIT
+COPY canvas-toblob-polyfill.patch .
+
+RUN git checkout $PAINTSCHAINER_COMMIT && \
+    git apply canvas-toblob-polyfill.patch && \
+    rm canvas-toblob-polyfill.patch
 
 EXPOSE 8000
 
