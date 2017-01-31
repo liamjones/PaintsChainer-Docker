@@ -12,7 +12,6 @@ RUN apt-get update && \
 
 ENV PAINTSCHAINER_MODEL=original \
     PAINTSCHAINER_GPU=0 \
-    PAINTSCHAINER_COMMIT=0d3ab98 \
     TINI_VERSION=0.13.2 \
     PATH=/opt/conda/bin:$PATH \
     CFLAGS=-I/usr/local/cuda-8.0/targets/x86_64-linux/include/:$CFLAGS \
@@ -25,33 +24,37 @@ RUN curl --location "https://github.com/liamjones/PaintsChainer-Models/releases/
     curl --location "https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini" > /tini
 
 # Re-running apt-get update because we're hoping to cache the Anaconda layer for a while
-RUN apt-get update && \
+RUN mkdir --parents /opt/conda/var/lib/dbus/ & \
+    apt-get update && \
     apt-get install --assume-yes \
         cron \
         git \
+        libgtk2.0-0 \
+        libpng12-0 \
         tmpreaper && \
     apt-get clean && \
     rm --recursive --force /var/lib/apt/lists/* && \
     chmod +x /tini && \
-    conda install --yes opencv && \
-    pip install chainer && \
-    git clone https://github.com/taizan/PaintsChainer.git && \
+    conda install --yes --channel menpo opencv3 && \
+    conda clean --all && \
+    pip --no-cache-dir install --upgrade pip && \
+    pip --no-cache-dir install chainer
+
+ENV PAINTSCHAINER_COMMIT=53626a1
+
+RUN git clone https://github.com/taizan/PaintsChainer.git && \
     mkdir /PaintsChainer/cgi-bin/paint_x2_unet/models/ && \
     mv /unet_*_standard /Licence.txt /PaintsChainer/cgi-bin/paint_x2_unet/models/ && \
-    touch /PaintsChainer/static/images/line/.tmpreaper && \
-    touch /PaintsChainer/static/images/out/.tmpreaper && \
-    touch /PaintsChainer/static/images/out_min/.tmpreaper && \
-    touch /PaintsChainer/static/images/ref/.tmpreaper && \
-    /bin/bash -c "echo -e \"* * * * * root /usr/sbin/tmpreaper --protect '*/.tmpreaper' 1h /PaintsChainer/static/images/\n\" > /etc/cron.d/delete-old-paintschainer-images" && \
+    touch /PaintsChainer/images/line/.tmpreaper && \
+    touch /PaintsChainer/images/out/.tmpreaper && \
+    touch /PaintsChainer/images/out_min/.tmpreaper && \
+    touch /PaintsChainer/images/ref/.tmpreaper && \
+    /bin/bash -c "echo -e \"* * * * * root /usr/sbin/tmpreaper --protect '*/.tmpreaper' 1h /PaintsChainer/images/\n\" > /etc/cron.d/delete-old-paintschainer-images" && \
     chmod 0644 /etc/cron.d/delete-old-paintschainer-images
 
 WORKDIR /PaintsChainer
 
-COPY absolute-downloads-url.patch .
-
-RUN git checkout $PAINTSCHAINER_COMMIT && \
-    git apply absolute-downloads-url.patch && \
-    rm absolute-downloads-url.patch
+RUN git checkout $PAINTSCHAINER_COMMIT
 
 EXPOSE 8000
 

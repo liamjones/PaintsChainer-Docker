@@ -40,7 +40,7 @@ $ docker run -p 8000:8000 -e PAINTSCHAINER_GPU=-1 liamjones/paintschainer-docker
 
 ## Access the web interface
 
-After bringing up the container, the web interface should be available at [http://localhost:8000/static/](http://localhost:8000/static/)
+After bringing up the container, the web interface should be available at [http://localhost:8000/](http://localhost:8000/)
 
 # Notes
 
