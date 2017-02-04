@@ -40,9 +40,10 @@ RUN mkdir --parents /opt/conda/var/lib/dbus/ & \
     pip --no-cache-dir install --upgrade pip && \
     pip --no-cache-dir install chainer
 
-ENV PAINTSCHAINER_COMMIT=53626a1
+ENV PAINTSCHAINER_REPO=https://github.com/taizan/PaintsChainer.git \
+    PAINTSCHAINER_COMMIT=53626a1
 
-RUN git clone https://github.com/taizan/PaintsChainer.git && \
+RUN git clone $PAINTSCHAINER_REPO && \
     mkdir /PaintsChainer/cgi-bin/paint_x2_unet/models/ && \
     mv /unet_*_standard /Licence.txt /PaintsChainer/cgi-bin/paint_x2_unet/models/ && \
     touch /PaintsChainer/images/line/.tmpreaper && \
