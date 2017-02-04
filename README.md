@@ -1,6 +1,6 @@
 # PaintsChainer-Docker
 
-Docker container for [PaintsChainer](https://github.com/taizan/PaintsChainer)
+Docker container for [PaintsChainer](https://github.com/pfnet/PaintsChainer)
 
 # How to use this image
 
