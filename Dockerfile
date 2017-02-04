@@ -55,11 +55,11 @@ RUN git clone $PAINTSCHAINER_REPO && \
 
 WORKDIR /PaintsChainer
 
-COPY canvas-toblob-polyfill.patch .
+COPY *.patch ./
 
 RUN git checkout $PAINTSCHAINER_COMMIT && \
-    git apply canvas-toblob-polyfill.patch && \
-    rm canvas-toblob-polyfill.patch
+    git apply *.patch && \
+    rm *.patch
 
 EXPOSE 8000
 
