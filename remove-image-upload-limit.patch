@@ -1,15 +1,15 @@
 diff --git a/paints_chainer.js b/paints_chainer.js
-index 94e183a..3ba807f 100644
+index 3157619..c0196b5 100644
 --- a/paints_chainer.js
 +++ b/paints_chainer.js
-@@ -120,10 +120,6 @@ $(function () {
- 
-   function colorize(new_image_id) {
-     $('#wPaint').wPaint('imageCanvas').toBlob(function (ref_blob) {
--      if (ref_blob.size > 30000) {
--        alert('file size over');
--        return;
--      }
-       var ajaxData = new FormData();
-       ajaxData.append('id', new_image_id || image_id);
-       ajaxData.append('blur', $('#blur_k').val());
+@@ -131,10 +131,6 @@ $(function () {
+       }
+       blobUrlToBlob($('#background').attr('src'), function (line_blob) {
+         ajaxData.append('line', line_blob);
+-        if (line_blob.size > 1000000) {
+-           alert('Image too large to colorize');
+-           return;
+-        }
+         paint(ajaxData);
+       });
+     });
