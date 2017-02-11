@@ -63,6 +63,6 @@ RUN git checkout $PAINTSCHAINER_COMMIT && \
 
 EXPOSE 8000
 
-ENTRYPOINT [ "/tini", "--" ]
+ENTRYPOINT [ "/tini", "-g", "--" ]
 
 CMD [ "sh", "-c", "cron && python -u server.py --host 0.0.0.0 --gpu $PAINTSCHAINER_GPU"]
