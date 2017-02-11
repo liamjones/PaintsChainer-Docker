@@ -1,8 +1,28 @@
 diff --git a/paints_chainer.js b/paints_chainer.js
-index 3157619..c0196b5 100644
+index 62f04d4..f5489b2 100644
 --- a/paints_chainer.js
 +++ b/paints_chainer.js
-@@ -131,10 +131,6 @@ $(function () {
+@@ -75,7 +75,7 @@ $(function () {
+   }
+ 
+   function post(data) {
+- 
++
+     $.ajax({
+       type: 'POST',
+       url: origin + '/post',
+@@ -107,8 +107,8 @@ $(function () {
+ 
+   function paint(id) {
+     var ajaxData = new FormData();
+-      ajaxData.append('id', image_id)   
+-    
++      ajaxData.append('id', image_id)
++
+     $.ajax({
+       type: 'POST',
+       url: origin + '/paint',
+@@ -164,10 +164,6 @@ $(function () {
        }
        blobUrlToBlob($('#background').attr('src'), function (line_blob) {
          ajaxData.append('line', line_blob);
@@ -10,6 +30,6 @@ index 3157619..c0196b5 100644
 -           alert('Image too large to colorize');
 -           return;
 -        }
-         paint(ajaxData);
+         post(ajaxData);
        });
      });

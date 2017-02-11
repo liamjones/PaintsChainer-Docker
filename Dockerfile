@@ -41,7 +41,7 @@ RUN mkdir --parents /opt/conda/var/lib/dbus/ & \
     pip --no-cache-dir install chainer
 
 ENV PAINTSCHAINER_REPO=https://github.com/pfnet/PaintsChainer.git \
-    PAINTSCHAINER_COMMIT=ab02ff0
+    PAINTSCHAINER_COMMIT=357a810
 
 RUN git clone $PAINTSCHAINER_REPO && \
     mkdir /PaintsChainer/cgi-bin/paint_x2_unet/models/ && \
