@@ -12,7 +12,7 @@ RUN apt-get update && \
 
 ENV PAINTSCHAINER_MODEL=original \
     PAINTSCHAINER_GPU=0 \
-    TINI_VERSION=0.13.2 \
+    TINI_VERSION=0.14.0 \
     PATH=/opt/conda/bin:$PATH \
     CFLAGS=-I/usr/local/cuda-8.0/targets/x86_64-linux/include/:$CFLAGS \
     LDFLAGS=-L/usr/local/cuda-8.0/targets/x86_64-linux/lib/:$LDFLAGS \
