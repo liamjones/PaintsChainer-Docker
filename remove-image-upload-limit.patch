@@ -1,28 +1,8 @@
 diff --git a/paints_chainer.js b/paints_chainer.js
-index 62f04d4..f5489b2 100644
+index 791ef7d..c03f8f4 100644
 --- a/paints_chainer.js
 +++ b/paints_chainer.js
-@@ -75,7 +75,7 @@ $(function () {
-   }
- 
-   function post(data) {
-- 
-+
-     $.ajax({
-       type: 'POST',
-       url: origin + '/post',
-@@ -107,8 +107,8 @@ $(function () {
- 
-   function paint(id) {
-     var ajaxData = new FormData();
--      ajaxData.append('id', image_id)   
--    
-+      ajaxData.append('id', image_id)
-+
-     $.ajax({
-       type: 'POST',
-       url: origin + '/paint',
-@@ -164,10 +164,6 @@ $(function () {
+@@ -172,10 +172,6 @@ $(function () {
        }
        blobUrlToBlob($('#background').attr('src'), function (line_blob) {
          ajaxData.append('line', line_blob);
