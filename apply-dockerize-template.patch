@@ -1,0 +1,13 @@
+diff --git a/server.py b/server.py
+index 3ddc1a9..f1c914d 100755
+--- a/server.py
++++ b/server.py
+@@ -114,7 +114,7 @@ class MyHandler(http.server.CGIHTTPRequestHandler):
+                 blur = 0
+ 
+         self.log_t()
+-        painter.colorize(id_str, form["step"][0].decode() if "step" in form else "C", blur=blur)
++        painter.colorize(id_str, form["step"][0].decode() if "step" in form else "C", blur=blur, s_size={{ .Env.PAINTSCHAINER_S_SIZE }})
+ 
+         self.log_t()
+         self.ret_result(True)

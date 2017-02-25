@@ -12,7 +12,9 @@ RUN apt-get update && \
 
 ENV PAINTSCHAINER_MODEL=original \
     PAINTSCHAINER_GPU=0 \
+    PAINTSCHAINER_S_SIZE=128 \
     TINI_VERSION=0.14.0 \
+    DOCKERIZE_VERSION=0.3.0 \
     PATH=/opt/conda/bin:$PATH \
     CFLAGS=-I/usr/local/cuda-8.0/targets/x86_64-linux/include/:$CFLAGS \
     LDFLAGS=-L/usr/local/cuda-8.0/targets/x86_64-linux/lib/:$LDFLAGS \
@@ -21,7 +23,10 @@ ENV PAINTSCHAINER_MODEL=original \
 RUN curl --location "https://github.com/liamjones/PaintsChainer-Models/releases/download/{$PAINTSCHAINER_MODEL}/unet_128_standard" > unet_128_standard && \
     curl --location "https://github.com/liamjones/PaintsChainer-Models/releases/download/{$PAINTSCHAINER_MODEL}/unet_512_standard" > unet_512_standard && \
     curl --location "https://github.com/liamjones/PaintsChainer-Models/releases/download/{$PAINTSCHAINER_MODEL}/License.txt" > Licence.txt && \
-    curl --location "https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini" > /tini
+    curl --location "https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini" > /usr/local/bin/tini && \
+    curl --location "https://github.com/jwilder/dockerize/releases/download/v$DOCKERIZE_VERSION/dockerize-linux-amd64-v$DOCKERIZE_VERSION.tar.gz" > /dockerize.tar.gz && \
+    tar -C /usr/local/bin -zxvf /dockerize.tar.gz && \
+    rm /dockerize.tar.gz
 
 # Re-running apt-get update because we're hoping to cache the Anaconda layer for a while
 RUN mkdir --parents /opt/conda/var/lib/dbus/ & \
@@ -34,10 +39,9 @@ RUN mkdir --parents /opt/conda/var/lib/dbus/ & \
         tmpreaper && \
     apt-get clean && \
     rm --recursive --force /var/lib/apt/lists/* && \
-    chmod +x /tini && \
+    chmod +x /usr/local/bin/tini && \
     conda install --yes --channel menpo opencv3 && \
     conda clean --all && \
-    pip --no-cache-dir install --upgrade pip && \
     pip --no-cache-dir install chainer
 
 ENV PAINTSCHAINER_REPO=https://github.com/pfnet/PaintsChainer.git \
@@ -59,10 +63,11 @@ COPY *.patch ./
 
 RUN git checkout $PAINTSCHAINER_COMMIT && \
     git apply *.patch && \
-    rm *.patch
+    rm *.patch && \
+    mv server.py server.py.template
 
 EXPOSE 8000
 
-ENTRYPOINT [ "/tini", "-g", "--" ]
+ENTRYPOINT [ "tini", "-g", "--" ]
 
-CMD [ "sh", "-c", "cron && python -u server.py --host 0.0.0.0 --gpu $PAINTSCHAINER_GPU"]
+CMD [ "sh", "-c", "cron && dockerize --template server.py.template:server.py && python -u server.py --host 0.0.0.0 --gpu $PAINTSCHAINER_GPU"]
