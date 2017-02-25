@@ -11,13 +11,13 @@ If you want to run this on Windows and have no familiarity with Docker, etc you 
 Ensure you have [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) installed for GPU passthrough to containers. To run with the default GPU:
 
 ```console
-$ nvidia-docker run -p 8000:8000 liamjones/paintschainer-docker
+$ nvidia-docker run --rm -p 8000:8000 liamjones/paintschainer-docker
 ```
 
 If you have multiple GPUs and want to specify an alternate one you can specify GPU number via an environment variable:
 
 ```console
-$ nvidia-docker run -p 8000:8000 -e PAINTSCHAINER_GPU=1 liamjones/paintschainer-docker
+$ nvidia-docker run --rm -p 8000:8000 -e PAINTSCHAINER_GPU=1 liamjones/paintschainer-docker
 ```
 
 GPU numbers can be verified by running:
@@ -35,7 +35,7 @@ This will be slower than GPU processing but has some advantages;
 * Can potentially process larger images (assuming you have more RAM than VRAM)
 
 ```console
-$ docker run -p 8000:8000 -e PAINTSCHAINER_GPU=-1 liamjones/paintschainer-docker
+$ docker run --rm -p 8000:8000 -e PAINTSCHAINER_GPU=-1 liamjones/paintschainer-docker
 ```
 
 ## Access the web interface
