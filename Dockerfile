@@ -1,11 +1,13 @@
-FROM nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04
+FROM nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04
 
 MAINTAINER Liam Jones <liam@stardive.co.uk>
 
 # Keep Anaconda download separate so this big layer can usually remain cached
 ENV ANACONDA_VERSION=4.2.0
 RUN apt-get update && \
-    apt-get install --assume-yes ca-certificates && \
+    apt-get install --assume-yes \
+        ca-certificates \
+        curl && \
     curl --location "https://repo.continuum.io/archive/Anaconda3-${ANACONDA_VERSION}-Linux-x86_64.sh" > /anaconda.sh && \
     /bin/bash anaconda.sh -b -p /opt/conda && \
     rm anaconda.sh
@@ -42,10 +44,12 @@ RUN mkdir --parents /opt/conda/var/lib/dbus/ & \
     chmod +x /usr/local/bin/tini && \
     conda install --yes --channel menpo opencv3 && \
     conda clean --all && \
-    pip --no-cache-dir install chainer
+    pip --no-cache-dir install \
+        cupy \
+        chainer
 
 ENV PAINTSCHAINER_REPO=https://github.com/pfnet/PaintsChainer.git \
-    PAINTSCHAINER_COMMIT=ecd5087
+    PAINTSCHAINER_COMMIT=1c14f9e
 
 RUN git clone $PAINTSCHAINER_REPO && \
     mkdir /PaintsChainer/cgi-bin/paint_x2_unet/models/ && \

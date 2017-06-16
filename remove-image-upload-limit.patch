@@ -1,8 +1,8 @@
 diff --git a/paints_chainer.js b/paints_chainer.js
-index 791ef7d..c03f8f4 100644
+index f668fc0..788c535 100644
 --- a/paints_chainer.js
 +++ b/paints_chainer.js
-@@ -172,10 +172,6 @@ $(function () {
+@@ -176,10 +176,6 @@ $(function () {
        }
        blobUrlToBlob($('#background').attr('src'), function (line_blob) {
          ajaxData.append('line', line_blob);

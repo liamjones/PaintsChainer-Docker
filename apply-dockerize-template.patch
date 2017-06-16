@@ -1,5 +1,5 @@
 diff --git a/server.py b/server.py
-index 3ddc1a9..f1c914d 100755
+index 3ddc1a9..2231c97 100755
 --- a/server.py
 +++ b/server.py
 @@ -114,7 +114,7 @@ class MyHandler(http.server.CGIHTTPRequestHandler):
